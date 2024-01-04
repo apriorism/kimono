@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Kimono extends JavaPlugin implements Listener {
     private static Kimono plugin;
     private File scriptsFolder;
+    private ScriptManager scriptManager;
 
     @Override
     public void onEnable() {
@@ -29,6 +30,8 @@ public class Kimono extends JavaPlugin implements Listener {
         scriptsFolder = new File(getDataFolder(), "scripts");
 
         getServer().getScheduler().runTaskLater(this, () -> {
+            scriptManager = new ScriptManager(this);
+            scriptManager.load();
             getServer().getPluginManager().registerEvents(this, this);
         }, 1L);
     }
