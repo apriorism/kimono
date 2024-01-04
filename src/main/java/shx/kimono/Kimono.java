@@ -21,13 +21,12 @@ public class Kimono extends JavaPlugin implements Listener {
         if ( !getDataFolder().exists() ) {
             getDataFolder().mkdir();
             saveResource("config.yml", false);
-
-            // create new folder to store scripts
-            File scriptFolder = new File(getDataFolder(), "scripts");
-            scriptFolder.mkdir();
         }
 
         scriptsFolder = new File(getDataFolder(), "scripts");
+        if ( !scriptsFolder.exists() ) {
+            scriptsFolder.mkdir();
+        }
 
         getServer().getScheduler().runTaskLater(this, () -> {
             scriptManager = new ScriptManager(this);
