@@ -13,14 +13,15 @@ public class Kimono extends JavaPlugin implements Listener {
     private static Kimono plugin;
     private File scriptsFolder;
     private ScriptManager scriptManager;
+    private StateStore stateStore;
 
     @Override
     public void onEnable() {
         plugin = this;
+        stateStore = new StateStore();
 
         if ( !getDataFolder().exists() ) {
             getDataFolder().mkdir();
-            saveResource("config.yml", false);
         }
 
         scriptsFolder = new File(getDataFolder(), "scripts");
@@ -57,5 +58,9 @@ public class Kimono extends JavaPlugin implements Listener {
 
     public File getScriptsFolder() {
         return scriptsFolder;
+    }
+
+    public StateStore getStateStore() {
+        return stateStore;
     }
 }
