@@ -58,7 +58,7 @@ public final class ScriptManager {
     public boolean loadScript(String name) throws ScriptException {
         Script script = engine.get(name);
         if (script != null) return false;
-        File newScript = new File(kimono.getDataFolder(), name + ".java");
+        File newScript = new File(kimono.getScriptsFolder(), name + ".java");
         if (!newScript.exists()) return false;
         return loadScript(newScript);
     }
@@ -105,7 +105,7 @@ public final class ScriptManager {
         }
         Bukkit.getServer().getPluginCommand("skriptjava").setExecutor(new ScriptInternalCommand(this));
 
-        File[] fileScripts = kimono.getDataFolder().listFiles((f, n) -> n.toLowerCase().endsWith(".java"));
+        File[] fileScripts = kimono.getScriptsFolder().listFiles((f, n) -> n.toLowerCase().endsWith(".java"));
         if (fileScripts == null) return;
         try {
             List<Script> skripts = engine.compileAll(Arrays.asList(fileScripts));
@@ -227,7 +227,7 @@ public final class ScriptManager {
 
     public void reload() {
         engine.removeAll();
-        File[] fileScripts = kimono.getDataFolder().listFiles((f, n) -> n.endsWith(".java"));
+        File[] fileScripts = kimono.getScriptsFolder().listFiles((f, n) -> n.endsWith(".java"));
         if (fileScripts == null) return;
         try {
             List<Script> skripts = engine.compileAll(Arrays.asList(fileScripts));
