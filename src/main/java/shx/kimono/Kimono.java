@@ -2,6 +2,7 @@ package shx.kimono;
 
 import java.io.File;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -14,11 +15,13 @@ public class Kimono extends JavaPlugin implements Listener {
     private File scriptsFolder;
     private ScriptManager scriptManager;
     private StateStore stateStore;
+    private DatabaseConnection databaseConnection;
 
     @Override
     public void onEnable() {
         plugin = this;
         stateStore = new StateStore();
+        databaseConnection = new DatabaseConnection(getConfig());
 
         if ( !getDataFolder().exists() ) {
             getDataFolder().mkdir();
@@ -28,6 +31,8 @@ public class Kimono extends JavaPlugin implements Listener {
         if ( !scriptsFolder.exists() ) {
             scriptsFolder.mkdir();
         }
+
+        defaultConfig();
 
         getServer().getScheduler().runTaskLater(this, () -> {
             scriptManager = new ScriptManager(this);
@@ -52,6 +57,19 @@ public class Kimono extends JavaPlugin implements Listener {
         getLogger().info("event plugin loaded");
     }
 
+    private void defaultConfig() {
+        FileConfiguration config = getConfig();
+
+        config.addDefault("database.host", null);
+        config.addDefault("database.port", null);
+        config.addDefault("database.database", null);
+        config.addDefault("database.username", null);
+        config.addDefault("database.password", null);
+
+        config.options().copyDefaults(true);
+        saveConfig();
+    }
+
     public static Kimono getPlugin() {
         return plugin;
     }
@@ -62,5 +80,9 @@ public class Kimono extends JavaPlugin implements Listener {
 
     public StateStore getStateStore() {
         return stateStore;
+    }
+
+    public DatabaseConnection getDatabase() {
+        return databaseConnection;
     }
 }
