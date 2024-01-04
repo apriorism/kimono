@@ -20,8 +20,10 @@ public class Kimono extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         plugin = this;
+        defaultConfig();
+        
         stateStore = new StateStore();
-        databaseConnection = new DatabaseConnection(getConfig());
+        databaseConnection = new DatabaseConnection();
 
         if ( !getDataFolder().exists() ) {
             getDataFolder().mkdir();
@@ -31,8 +33,6 @@ public class Kimono extends JavaPlugin implements Listener {
         if ( !scriptsFolder.exists() ) {
             scriptsFolder.mkdir();
         }
-
-        defaultConfig();
 
         getServer().getScheduler().runTaskLater(this, () -> {
             scriptManager = new ScriptManager(this);
@@ -65,6 +65,10 @@ public class Kimono extends JavaPlugin implements Listener {
         config.addDefault("database.database", null);
         config.addDefault("database.username", null);
         config.addDefault("database.password", null);
+        config.addDefault("database.maxPoolSize", 10);
+        config.addDefault("database.connectionTimeout", 1000);
+        config.addDefault("database.idleTimeout", 30000);
+        config.addDefault("database.maxLifetime", 60000);
 
         config.options().copyDefaults(true);
         saveConfig();
