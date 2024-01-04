@@ -10,7 +10,7 @@ public final class ClassScriptMemoryJavaObject extends AbstractScriptJavaObject 
     private transient byte[] bytes = null;
     private final String className;
 
-    ClassScriptMemoryJavaObject(String className) {
+    public ClassScriptMemoryJavaObject(String className) {
         super(className, Kind.CLASS);
         this.className = className;
     }

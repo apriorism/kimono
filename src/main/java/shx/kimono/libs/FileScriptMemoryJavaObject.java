@@ -7,7 +7,7 @@ public final class FileScriptMemoryJavaObject extends AbstractScriptJavaObject {
     private final String code;
     private final String className;
 
-    FileScriptMemoryJavaObject(File origin, String className, Kind kind, String code) {
+    public FileScriptMemoryJavaObject(File origin, String className, Kind kind, String code) {
         super(className, kind);
         this.className = className;
         this.origin = origin;
